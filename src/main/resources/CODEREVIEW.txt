@@ -1,0 +1,9 @@
+com.srmasset.factory.EntityFactory.java
+linha 15, EntityFactory é um nome meio ambiguo, poderia ter um nome diferente
+linha 27, não precisa existir
+linha 36, while nunca vai chamar o metodo da linha 47.
+linha 41, os parâmetros sendo passados para o método podiam ser uma classe Adress
+linha 42, a variavel vai ser ilegível sem concatenar alguma marcação de texto.
+linha 47, nome do método aparentemente está errado se levar em conta o TODO.
+
+Os packages não são subpackages do package thcepdetails.
