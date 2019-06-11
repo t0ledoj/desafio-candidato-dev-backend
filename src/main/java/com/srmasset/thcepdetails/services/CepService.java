@@ -12,27 +12,24 @@ import com.srmasset.thcepdetails.rest.Cep;
 
 @Service
 public class CepService {
-	private List<Cep> ceps;
-	private RestTemplate restTemplate = new RestTemplate();
-	private Cep cep;
+	
 	@Autowired
-	CepService(){}
+	private RestTemplate restTemplate;
 	
-	@Cacheable("ceps")
-	public List<Cep> getAddressByCep(String value) {
-		ceps = new ArrayList<>();
-		getAddress(value);
+	public Cep getAddressByCep(String value) {
+		Cep cep = getAddress(value);
+		return cep;
+	}
+
+	public List<Cep> getAddressesByCep(List<String> cepsList) {
+		List<Cep> ceps = new ArrayList<>();
+		cepsList.forEach(cepNumber -> ceps.add(getAddress(cepNumber)));
 		return ceps;
 	}
-	@Cacheable("ceps")
-	public List<Cep> getAddressByCeps(List<String> cepsList) {
-		ceps = new ArrayList<>();
-		cepsList.forEach(cepNumber -> getAddress(cepNumber));
-		return ceps;
-	}
 	
-	public void getAddress(String value) {
-		cep = restTemplate.getForObject("https://zuul.trusthub.com.br/orchestrator/v1/obter-endereco-por-cep/"+value, Cep.class);
-		ceps.add(cep);
+	@Cacheable("ceps")
+	public Cep getAddress(String value) {
+		Cep cep = restTemplate.getForObject("https://zuul.trusthub.com.br/orchestrator/v1/obter-endereco-por-cep/"+value, Cep.class);
+		return cep;
 	}
 }

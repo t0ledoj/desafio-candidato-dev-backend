@@ -17,17 +17,19 @@ public class CepController {
 	
 	private final CepService cepService;
 	@Autowired
-	CepController (CepService cepService){ this.cepService = cepService; }
+	CepController (CepService cepService){ 
+		this.cepService = cepService; 
+	}
 	
 	@RequestMapping(value="/consultar_cep/{cep}", method=RequestMethod.GET)
 	@ResponseBody
-	public List<Cep> findDetail(@PathVariable String cep){
+	public Cep findDetail(@PathVariable String cep){
 		return cepService.getAddressByCep(cep);
 	}
 	
 	@RequestMapping(value = "/consultar_ceps", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Cep> findDetails(@RequestParam("cep") List<String> cep) {
-		return cepService.getAddressByCeps(cep);
+		return cepService.getAddressesByCep(cep);
 	}
 }
