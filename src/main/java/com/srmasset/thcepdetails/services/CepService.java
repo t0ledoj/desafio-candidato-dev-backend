@@ -16,20 +16,13 @@ public class CepService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	public Cep getAddressByCep(String value) {
-		Cep cep = getAddress(value);
-		return cep;
-	}
-
-	public List<Cep> getAddressesByCep(List<String> cepsList) {
-		List<Cep> ceps = new ArrayList<>();
-		cepsList.forEach(cepNumber -> ceps.add(getAddress(cepNumber)));
-		return ceps;
-	}
-	
-	@Cacheable("ceps")
-	public Cep getAddress(String value) {
-		Cep cep = restTemplate.getForObject("https://zuul.trusthub.com.br/orchestrator/v1/obter-endereco-por-cep/"+value, Cep.class);
-		return cep;
+	@Cacheable("cepDetails")
+	public List<Cep> getDetails(List<String> cepNumberList){
+		List<Cep> cepDetails = new ArrayList<>();
+		cepNumberList.forEach(cepNumber -> {
+			Cep cep = restTemplate.getForObject("https://zuul.trusthub.com.br/orchestrator/v1/obter-endereco-por-cep/"+cepNumber, Cep.class);
+			cepDetails.add(cep);
+		});
+		return cepDetails;
 	}
 }

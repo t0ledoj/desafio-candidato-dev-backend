@@ -1,5 +1,6 @@
 package com.srmasset.thcepdetails.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,17 @@ public class CepController {
 		this.cepService = cepService; 
 	}
 	
-	@RequestMapping(value="/consultar_cep/{cep}", method=RequestMethod.GET)
+	@RequestMapping(value="/consultar_cep/{cepNumber}", method=RequestMethod.GET)
 	@ResponseBody
-	public Cep findDetail(@PathVariable String cep){
-		return cepService.getAddressByCep(cep);
+	public List<Cep> findDetailByCep(@PathVariable String cepNumber){
+		List<String> cepList = new ArrayList<String>();
+		cepList.add(cepNumber);
+		return cepService.getDetails(cepList);
 	}
 	
 	@RequestMapping(value = "/consultar_ceps", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Cep> findDetails(@RequestParam("cep") List<String> cep) {
-		return cepService.getAddressesByCep(cep);
+		return cepService.getDetails(cep);
 	}
 }

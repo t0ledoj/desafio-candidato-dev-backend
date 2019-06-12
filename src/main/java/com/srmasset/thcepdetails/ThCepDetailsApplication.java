@@ -20,7 +20,8 @@ public class ThCepDetailsApplication {
 	
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-	   return builder.build();
+		//.. some other configurations
+		return builder.build();
 	}
 
 }
